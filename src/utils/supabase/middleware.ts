@@ -61,7 +61,7 @@ export const updateSession = async (request: NextRequest) => {
     const isAuthenticated = hasApiAuth || hasSupabaseAuth || hasSimpleAuth;
 
     // Protected routes - redirect to home page if not authenticated
-    if (request.nextUrl.pathname.startsWith("/protected") && !isAuthenticated) {
+    if ((request.nextUrl.pathname.startsWith("/protected") || request.nextUrl.pathname.startsWith("/admin")) && !isAuthenticated) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 

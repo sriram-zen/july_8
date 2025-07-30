@@ -14,10 +14,9 @@ import { clientAuth } from "@/lib/client-auth";
 interface AdminSignInModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
 }
 
-export function AdminSignInModal({ isOpen, onClose, onSuccess }: AdminSignInModalProps) {
+export function AdminSignInModal({ isOpen, onClose }: AdminSignInModalProps) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -39,9 +38,8 @@ export function AdminSignInModal({ isOpen, onClose, onSuccess }: AdminSignInModa
         let result = await clientAuth.signIn(formData.username, formData.password);
         
         if (result.success) {
-          onSuccess();
           onClose();
-          window.location.href = "/protected";
+          window.location.href = "/admin";
           return;
         }
         
@@ -50,9 +48,8 @@ export function AdminSignInModal({ isOpen, onClose, onSuccess }: AdminSignInModa
         result = await signInAction(form);
         
         if (result.success) {
-          onSuccess();
           onClose();
-          window.location.href = "/protected";
+          window.location.href = "/admin";
           return;
         }
         
@@ -61,9 +58,8 @@ export function AdminSignInModal({ isOpen, onClose, onSuccess }: AdminSignInModa
         result = await simpleSignInAction(form);
         
         if (result.success) {
-          onSuccess();
           onClose();
-          window.location.href = "/protected";
+          window.location.href = "/admin";
         } else {
           // Show the most user-friendly error message
           if (result.error?.includes('Invalid admin credentials')) {
