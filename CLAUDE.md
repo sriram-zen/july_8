@@ -2,48 +2,47 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Commands
+## Project Overview
 
-### Development
+This is a Next.js 15.3.1 project with TypeScript, styled using Tailwind CSS v4 and shadcn/ui components. The project follows the App Router pattern and includes Supabase integration for backend functionality.
+
+## Development Commands
+
 - `npm run dev` - Start development server on http://localhost:3000
-- `npm run build` - Build production application
+- `npm run build` - Build the production application
 - `npm run start` - Start production server
-- `npm run lint` - Run Next.js linting
-
-### Testing
-- No test framework configured yet
+- `npm run lint` - Run ESLint for code linting
 
 ## Architecture
 
-This is a Next.js 15 application using the App Router with TypeScript, featuring:
-
-### Authentication Stack
-- **Supabase Auth**: Complete authentication system with server-side rendering
-- **Server Actions**: Authentication actions in `src/actions/auth.ts` (signUp, signIn, forgotPassword, resetPassword, signOut)
-- **Protected Routes**: Routes under `/protected` require authentication, enforced by middleware logic in `src/utils/supabase/middleware.ts`
-- **Auth Routing**: Authenticated users are redirected from `/` to `/protected`
-
-### UI Framework
-- **shadcn/ui**: Component library with Radix UI primitives and Tailwind CSS
-- **Theme System**: Dark/light mode using next-themes
-- **Component Structure**: UI components in `src/components/ui/`, custom components in `src/components/`
-
 ### Project Structure
-- **App Router**: All pages in `src/app/` directory
-- **Server Components**: Default rendering pattern with Supabase SSR integration
-- **Auth Pages**: Grouped in `src/app/(auth-pages)/` route group
-- **Path Aliases**: `@/` mapped to `src/` directory
+- **App Router**: Uses Next.js 15 App Router in `src/app/`
+- **Components**: UI components in `src/components/ui/` (shadcn/ui), custom components in `src/components/`
+- **Utilities**: 
+  - `src/lib/utils.ts` - Contains `cn()` utility for class merging (clsx + tailwind-merge)
+  - `src/utils/utils.ts` - Contains `encodedRedirect()` for URL redirects with encoded messages
+- **Hooks**: Custom React hooks in `src/hooks/`
 
-### Key Patterns
-- **Supabase Integration**: 
-  - Server client: `src/utils/supabase/server.ts` (for Server Components)
-  - Client components use browser client from `src/utils/supabase/client.ts`
-  - Middleware handles session refresh and route protection
-- **Error Handling**: `encodedRedirect` utility for form error/success messages
-- **Environment Check**: `hasEnvVars` utility warns when Supabase environment variables are missing
+### Key Technologies
+- **UI Framework**: shadcn/ui with Radix UI primitives
+- **Styling**: Tailwind CSS v4 with CSS variables, "new-york" style theme
+- **State Management**: React Hook Form with Zod validation
+- **Database**: Supabase with SSR support
+- **Theme**: next-themes for dark/light mode switching
+- **Icons**: Lucide React
+- **Charts**: Recharts for data visualization
 
-### Development Notes
-- Environment variables required: `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- The app redirects authenticated users from root to `/protected`
-- Authentication state is managed server-side with cookies via Supabase SSR
-- Form submissions use Server Actions pattern
+### Path Aliases
+- `@/*` maps to `src/*`
+- `@/components` for components
+- `@/lib/utils` for utilities
+- `@/hooks` for custom hooks
+
+### Component Conventions
+- Components use Tailwind CSS classes
+- shadcn/ui components follow the "new-york" style variant
+- Theme switching is handled via next-themes with system preference support
+- Forms use react-hook-form with Zod schemas for validation
+
+### Database Integration
+The project includes Supabase client setup with SSR support for server-side data fetching.
